@@ -33,6 +33,11 @@ namespace SchoolOA
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";  //解决asp.net core 日期格式 datetime Json返回 带T的问题
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

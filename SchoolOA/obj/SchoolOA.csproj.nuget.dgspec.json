@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\SchoolOA\\SchoolOA.csproj": {}
+    "D:\\Github\\Shxi\\SchoolOA\\SchoolOA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\OALibrary.csproj": {
+    "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\OALibrary.csproj",
+        "projectUniqueName": "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj",
         "projectName": "OALibrary",
-        "projectPath": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\OALibrary.csproj",
-        "packagesPath": "C:\\Users\\ZheZhe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\obj\\",
+        "projectPath": "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj",
+        "packagesPath": "C:\\Users\\ShiZhe\\.nuget\\packages\\",
+        "outputPath": "D:\\Github\\Shxi\\OALibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ZheZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ShiZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -76,20 +76,20 @@
         }
       }
     },
-    "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\SchoolOA\\SchoolOA.csproj": {
+    "D:\\Github\\Shxi\\SchoolOA\\SchoolOA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\SchoolOA\\SchoolOA.csproj",
+        "projectUniqueName": "D:\\Github\\Shxi\\SchoolOA\\SchoolOA.csproj",
         "projectName": "SchoolOA",
-        "projectPath": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\SchoolOA\\SchoolOA.csproj",
-        "packagesPath": "C:\\Users\\ZheZhe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\SchoolOA\\obj\\",
+        "projectPath": "D:\\Github\\Shxi\\SchoolOA\\SchoolOA.csproj",
+        "packagesPath": "C:\\Users\\ShiZhe\\.nuget\\packages\\",
+        "outputPath": "D:\\Github\\Shxi\\SchoolOA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ZheZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ShiZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -102,8 +102,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\OALibrary.csproj": {
-                "projectPath": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\OALibrary.csproj"
+              "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj": {
+                "projectPath": "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj"
               }
             }
           }
@@ -143,6 +143,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.4, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",

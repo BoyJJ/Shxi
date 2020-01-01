@@ -25,6 +25,7 @@ namespace SchoolOA.Controllers
             {
                 code = 200,
                 msg = "WorkPlan query successfully!",
+                count = (int)planList.ToArray().Length,
                 planList = planList
             });
         }

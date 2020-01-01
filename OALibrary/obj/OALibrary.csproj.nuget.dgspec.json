@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\OALibrary.csproj": {}
+    "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\OALibrary.csproj": {
+    "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\OALibrary.csproj",
+        "projectUniqueName": "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj",
         "projectName": "OALibrary",
-        "projectPath": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\OALibrary.csproj",
-        "packagesPath": "C:\\Users\\ZheZhe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ZheZhe\\source\\repos\\SchoolOA\\OALibrary\\obj\\",
+        "projectPath": "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj",
+        "packagesPath": "C:\\Users\\ShiZhe\\.nuget\\packages\\",
+        "outputPath": "D:\\Github\\Shxi\\OALibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ZheZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ShiZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
