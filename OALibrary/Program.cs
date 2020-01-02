@@ -13,12 +13,14 @@ namespace OALibrary
 
 
             WageRepository wageRepository = new WageRepository();
-            var a = wageRepository.QueryAllbyYear("2020");
+            WageService wageService = new WageService();
+            var a = wageService.QueryDepartmentWage("zjc2016001", "2019-12-01");
             //Console.WriteLine(a[0].Wagetime);
             foreach (var aa in a) 
             {
                 Console.WriteLine(aa.Wagetime.ToString()+" "+aa.Totalwage);
             }
+
             Console.ReadLine();
         }
     }

@@ -88,15 +88,17 @@ namespace SchoolOA.Controllers
         }
 
         /// <summary>
-        /// 通过组合条件查询工资记录
+        /// 查询教师ID的某年或某月工资记录
+        /// 每次请求teacherid必填，year 和time二选一
         /// </summary>
         /// <param name="teacherid">教师ID</param>
-        /// <param name="wagetime">工资日期</param>
+        /// <param name="year">工资日期1：要查询的年份eg:2019</param>
+        /// <param name="time">工资日期2：要查询的年月eg:2019-01-01、2019-12-01</param>
         /// <returns>查询到的工资记录</returns>
-        public object QueryWage(string teacherid,string wagetime) 
+        public object QueryTeacherWage(string teacherid,string year,string time) 
         {
             WageService wageService = new WageService();
-            var wageList = wageService.QueryWage(teacherid, wagetime);
+            var wageList = wageService.QueryTeacherWage(teacherid,year,time);
             return Json(new
             {
                 code = 200,
@@ -106,40 +108,59 @@ namespace SchoolOA.Controllers
         }
 
         /// <summary>
-        /// 获取当月所有人工资记录
+        /// 查询部门（ID）内所有人的某月工资
         /// </summary>
-        /// <returns>当月所有人工资记录</returns>
-        public object ThisMonthWage()
-        {
-            WageService wageService = new WageService();
-            var wageList = wageService.QueryWage("", DateTime.Now.ToString("yyyy-MM-01"));//使用 DateTime 类获取当前时间
-            return Json(new
-            {
-                code = 200,
-                msg = "Wage query successfully!",
-                wageList = wageList
-            });
-        }
-
-        /// <summary>
-        /// 查询某年所有人工资
-        /// </summary>
-        /// <param name="year">年份</param>
+        /// <param name="departmentid">部门ID</param>
+        /// <param name="time">要查询的年月eg:2019-01-01、2019-12-01</param>
         /// <returns>工资记录列表</returns>
-        public object ThisYearWage(string year) 
+        public object QueryDepartmentWage(string departmentid, string time)
         {
             WageService wageService = new WageService();
-            var wageList = wageService.QueryWagebyYear(year);
+            var wageList = wageService.QueryDepartmentWage(departmentid, time);
             return Json(new
             {
                 code = 200,
-                msg = year + " Wage query successfully!",
+                msg = "Wage query successfully!",
                 wageList = wageList
             });
         }
+
+        ///// <summary>
+        ///// 获取当月所有人工资记录
+        ///// </summary>
+        ///// <returns>当月所有人工资记录</returns>
+        //public object ThisMonthWage()
+        //{
+        //    WageService wageService = new WageService();
+        //    var wageList = wageService.QueryWage("", DateTime.Now.ToString("yyyy-MM-01"));//使用 DateTime 类获取当前时间
+        //    return Json(new
+        //    {
+        //        code = 200,
+        //        msg = "Wage query successfully!",
+        //        wageList = wageList
+        //    });
+        //}
+
+        ///// <summary>
+        ///// 查询某年所有人工资
+        ///// </summary>
+        ///// <param name="year">年份</param>
+        ///// <returns>工资记录列表</returns>
+        //public object ThisYearWage(string year) 
+        //{
+        //    WageService wageService = new WageService();
+        //    var wageList = wageService.QueryWagebyYear(year);
+        //    return Json(new
+        //    {
+        //        code = 200,
+        //        msg = year + " Wage query successfully!",
+        //        wageList = wageList
+        //    });
+        //}
 
         /// <summary>
         /// 通过工资记录的表中ID修改工资信息
+        /// 所有工资都必填，没有为0
         /// </summary>
         /// <param name="id">工资记录表ID</param>
         /// <param name="basicwage">基本工资</param>
@@ -151,12 +172,10 @@ namespace SchoolOA.Controllers
         {
             WageService wageService = new WageService();
             wageService.UpdateWage(id, basicwage, overtimewage, welfare, bonus);
-            var wageList = wageService.QueryWage("", DateTime.Now.ToString("yyyy-MM-01"));//使用 DateTime 类获取当前时间
             return Json(new
             {
                 code = 200,
                 msg = "Wage update/set successfully!",
-                wageList = wageList
             });
         }
 
@@ -174,12 +193,10 @@ namespace SchoolOA.Controllers
         {
             WageService wageService = new WageService();
             wageService.AddWage(teacherid, wagetime, basicwage, overtimewage, welfare, bonus);
-            var wageList = wageService.QueryWage("", DateTime.Now.ToString("yyyy-MM-01"));//使用 DateTime 类获取当前时间
             return Json(new
             {
                 code = 200,
                 msg = "Add Wage successfully!",
-                wageList = wageList
             });
         }
 

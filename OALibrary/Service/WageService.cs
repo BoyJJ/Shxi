@@ -19,46 +19,55 @@ namespace OALibrary.Service
         /// <param name="overtimewage">加班工资</param>
         /// <param name="welfare">福利工资</param>
         /// <param name="bonus">全勤奖</param>
-        public void AddWage(string teacherid,string wagetime,float basicwage,float overtimewage,float welfare,float bonus ) 
+        public void AddWage(string teacherid, string wagetime, float basicwage, float overtimewage, float welfare, float bonus)
         {
-            wageRepository.Add(teacherid,wagetime,basicwage,overtimewage,welfare,bonus);
+            wageRepository.Add(teacherid, wagetime, basicwage, overtimewage, welfare, bonus);
         }
 
         /// <summary>
         /// 通过工资记录ID删除指定工资记录
         /// </summary>
         /// <param name="id">工资记录ID</param>
-        public void DeleteWage(int id) 
+        public void DeleteWage(int id)
         {
             wageRepository.Delete(id);
         }
 
         /// <summary>
-        /// 组合条件查询工资记录
+        /// 通过数据库记录ID查询工资记录
         /// </summary>
-        /// <param name="teacherid">教师ID（选填，为空查询选择月份所有人工资）</param>
-        /// <param name="wagetime">工资日期（必填）</param>
+        /// <param name="id">数据库记录ID</param>
         /// <returns></returns>
-        public List<Wage> QueryWage(string teacherid,string wagetime) 
+        public Wage QuerybyID(int id) 
         {
-            if (string.IsNullOrEmpty(teacherid)) 
-            {
-                return wageRepository.QueryAllbyTime(wagetime);
-            }
-            return new List<Wage> 
-            {
-                wageRepository.AccurateQuery(teacherid, wagetime) 
-                };
+            return wageRepository.QuerybyID(id);
         }
 
         /// <summary>
-        /// 查询某一年所有人的工资
+        /// 查询教师ID的工资记录（按年、按月）年、年月二选一,不可都传参
         /// </summary>
-        /// <param name="year">年份</param>
-        /// <returns>指定年份工资记录列表</returns>
-        public List<Wage> QueryWagebyYear(string year)
+        /// <param name="teacherid">教师ID</param>
+        /// <param name="year">年份（eg:2019--string类型）</param>
+        /// <param name="yearmonth">年月（eg:2019-01-01表示2019年1月工资）</param>
+        /// <returns></returns>
+        public List<Wage> QueryTeacherWage(string teacherid, string year, string yearmonth)
         {
-            return wageRepository.QueryAllbyYear(year);
+            if (string.IsNullOrEmpty(year)) //year为空，按年月查询某一月工资
+            {
+                return new List<Wage> { wageRepository.QuerybyTidMonth(teacherid, yearmonth) };//类型转化 ：Wage --> List<Wage>
+            }
+            return wageRepository.QueryAllbyTidYear(teacherid,year);
+        }
+
+        /// <summary>
+        /// 查询某部门（ID）内的所有人某月工资
+        /// </summary>
+        /// <param name="departmentid">部门ID</param>
+        /// <param name="time">工资日期（月份输入举例 eg：2019-01-01表示查询2019年1月工资）</param>
+        /// <returns>工资记录列表</returns>
+        public List<Wage> QueryDepartmentWage(string departmentid,string time)
+        {
+            return wageRepository.QueryAllbyDidMonth(departmentid, time);
         }
 
         /// <summary>
@@ -71,11 +80,12 @@ namespace OALibrary.Service
         /// <param name="bonus">全勤奖</param>
         public void UpdateWage(int id,float basicwage,float overtimewage,float welfare,float bonus) 
         {
-            var wage = wageRepository.Query(id);
+            var wage = wageRepository.QuerybyID(id);
             wage.Basicwage = basicwage;
             wage.Overtimewage = overtimewage;
             wage.Welfare = welfare;
             wage.Bonus = bonus;
+            wage.Totalwage = basicwage + overtimewage + welfare + bonus;
             wageRepository.Update(wage);
         }
 

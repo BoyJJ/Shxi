@@ -80,7 +80,7 @@ namespace OALibrary.Infrastructure
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Wage Query(int id) 
+        public Wage QuerybyID(int id) 
         {
             using (var context = new SchoolOAContext())
             {
@@ -91,63 +91,24 @@ namespace OALibrary.Infrastructure
         }
 
         /// <summary>
-        /// 查询某教师所有工资记录
+        /// 查询某教师某年所有工资记录
         /// </summary>
         /// <param name="teacherid">教师ID</param>
-        /// <returns>指定教师ID的所有工资记录</returns>
-        public List<Wage> QueryAllbyTid(string teacherid)
-        {
-            List<Wage> wageList = new List<Wage>();
-            using (var context = new SchoolOAContext())
-            {
-                wageList = (from u in context.Wage
-                            where u.Teacherid.Equals(teacherid)
-                            select u
-                                ).ToList();
-                context.SaveChanges();
-            }
-            return wageList;
-        }
-
-        /// <summary>
-        /// 按工资日期（某个月）查找工资记录
-        /// </summary>
-        /// <param name="wagetime">工资日期</param>
-        /// <returns>指定日期（某个月）的所有人的工资记录</returns>
-        public List<Wage> QueryAllbyTime(string wagetime)
-        {
-            List<Wage> wageList = new List<Wage>();
-            DateTime dt = Convert.ToDateTime(wagetime);
-            using (var context = new SchoolOAContext())
-            {
-                wageList = (from u in context.Wage
-                            where 0==DateTime.Compare(u.Wagetime, dt)
-                            select u
-                                ).ToList();
-                context.SaveChanges();
-            }
-            return wageList;
-        }
-
-        /// <summary>
-        /// 查询某一年所有人的工资
-        /// </summary>
         /// <param name="year">年份</param>
-        /// <returns>指定年份工资记录列表</returns>
-        public List<Wage> QueryAllbyYear(string year)
+        /// <returns>指定教师ID的某年的所有工资记录</returns>
+        public List<Wage> QueryAllbyTidYear(string teacherid,string year)
         {
             List<Wage> wageList = new List<Wage>();
             string Jan = "-01-01";
             string Dec = "-12-01";
             string Begin = year + Jan;
             string End = year + Dec;
-
             DateTime BeginTime = Convert.ToDateTime(Begin);
             DateTime EndTime = Convert.ToDateTime(End);
             using (var context = new SchoolOAContext())
             {
                 wageList = (from u in context.Wage
-                            where DateTime.Compare(u.Wagetime, BeginTime) >=0 && DateTime.Compare(u.Wagetime, EndTime) <= 0
+                            where u.Teacherid.Equals(teacherid) && DateTime.Compare(u.Wagetime, BeginTime) >= 0 && DateTime.Compare(u.Wagetime, EndTime) <= 0
                             select u
                                 ).ToList();
                 context.SaveChanges();
@@ -156,25 +117,94 @@ namespace OALibrary.Infrastructure
         }
 
         /// <summary>
-        /// 按教师ID和工资日期精确查询工资记录
+        /// 查询教师ID的某月的工资记录
         /// </summary>
         /// <param name="teacherid">教师ID</param>
-        /// <param name="wagetime">工资日期</param>
+        /// <param name="time">工资日期（月份输入举例 eg：2019-01-01表示查询2019年1月工资）</param>
         /// <returns>指定工资记录</returns>
-        public Wage AccurateQuery(string teacherid,string wagetime)
+        public Wage QuerybyTidMonth(string teacherid, string time)
         {
             Wage wage = new Wage();
-            DateTime dt = Convert.ToDateTime(wagetime);
+            DateTime dt = Convert.ToDateTime(time);
             using (var context = new SchoolOAContext())
             {
                 wage = (from u in context.Wage
-                        where (0 == DateTime.Compare(u.Wagetime, dt))&&(u.Teacherid.Equals(teacherid))
+                        where (0 == DateTime.Compare(u.Wagetime, dt)) && (u.Teacherid.Equals(teacherid))
                         select u
                             ).FirstOrDefault();
                 context.SaveChanges();
             }
             return wage;
         }
+
+        ///// <summary>
+        ///// 按工资日期（某个月）查找工资记录
+        ///// </summary>
+        ///// <param name="wagetime">工资日期</param>
+        ///// <returns>指定日期（某个月）的所有人的工资记录</returns>
+        //public List<Wage> QueryAllbyTime(string wagetime)
+        //{
+        //    List<Wage> wageList = new List<Wage>();
+        //    DateTime dt = Convert.ToDateTime(wagetime);
+        //    using (var context = new SchoolOAContext())
+        //    {
+        //        wageList = (from u in context.Wage
+        //                    where 0==DateTime.Compare(u.Wagetime, dt)
+        //                    select u
+        //                        ).ToList();
+        //        context.SaveChanges();
+        //    }
+        //    return wageList;
+        //}
+
+        ///// <summary>
+        ///// 查询某一年所有人的工资
+        ///// </summary>
+        ///// <param name="year">年份</param>
+        ///// <returns>指定年份工资记录列表</returns>
+        //public List<Wage> QueryAllbyYear(string year)
+        //{
+        //    List<Wage> wageList = new List<Wage>();
+        //    string Jan = "-01-01";
+        //    string Dec = "-12-01";
+        //    string Begin = year + Jan;
+        //    string End = year + Dec;
+
+        //    DateTime BeginTime = Convert.ToDateTime(Begin);
+        //    DateTime EndTime = Convert.ToDateTime(End);
+        //    using (var context = new SchoolOAContext())
+        //    {
+        //        wageList = (from u in context.Wage
+        //                    where DateTime.Compare(u.Wagetime, BeginTime) >=0 && DateTime.Compare(u.Wagetime, EndTime) <= 0
+        //                    select u
+        //                        ).ToList();
+        //        context.SaveChanges();
+        //    }
+        //    return wageList;
+        //}
+
+        /// <summary>
+        /// 查询某部门（ID）内的所有人某月工资
+        /// </summary>
+        /// <param name="departmentid">部门ID</param>
+        /// <param name="time">工资日期（月份输入举例 eg：2019-01-01表示查询2019年1月工资）</param>
+        /// <returns>工资记录列表</returns>
+        public List<Wage> QueryAllbyDidMonth(string departmentid, string time)
+        {
+            List<Wage> wageList = new List<Wage>();
+            DateTime Time = Convert.ToDateTime(time);
+            using (var context = new SchoolOAContext())
+            {
+                wageList = (from u in context.Wage
+                            from v in context.Teacherinfomation
+                            where u.Teacherid.Equals(v.Teacherid) &&v.Departmentid.Equals(departmentid) && DateTime.Compare(u.Wagetime, Time) == 0
+                            select u
+                                ).ToList();
+                context.SaveChanges();
+            }
+            return wageList;
+        }
+
 
         /// <summary>
         /// 更新指定工资记录对象
