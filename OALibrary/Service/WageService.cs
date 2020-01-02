@@ -21,7 +21,7 @@ namespace OALibrary.Service
         /// <param name="bonus">全勤奖</param>
         public void AddWage(string teacherid,string wagetime,float basicwage,float overtimewage,float welfare,float bonus ) 
         {
-            wageRepository.Add(teacherid,wagetime,basicwage,overtimewage,welfare,bonus);//先查询是否存在该教师ID该日期工资，不存在再添加
+            wageRepository.Add(teacherid,wagetime,basicwage,overtimewage,welfare,bonus);
         }
 
         /// <summary>
@@ -49,6 +49,16 @@ namespace OALibrary.Service
             {
                 wageRepository.AccurateQuery(teacherid, wagetime) 
                 };
+        }
+
+        /// <summary>
+        /// 查询某一年所有人的工资
+        /// </summary>
+        /// <param name="year">年份</param>
+        /// <returns>指定年份工资记录列表</returns>
+        public List<Wage> QueryWagebyYear(string year)
+        {
+            return wageRepository.QueryAllbyYear(year);
         }
 
         /// <summary>

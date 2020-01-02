@@ -1,0 +1,120 @@
+﻿
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+
+<h2 style="font-size:16px;display: inline-block;padding: 5px">员工工号</h2>
+<input style="border: 2px solid #ccc; width: 110px" type="text" name="teacherid" placeholder="请输入员工工号" id="teacherid" />
+
+<h2 style="font-size:16px;display: inline-block;padding: 5px">选择查看日期</h2>
+<select style="border: 2px solid #ccc; width: 80px; border-radius: 3px" id="wagetime">
+    <option value="2016">2016年</option>
+    <option value="2017">2017年</option>
+    <option value="2018">2018年</option>
+    <option value="2019">2019年</option>
+</select>
+
+<div class="layui-btn-container" style="display:inline-block">
+    <button type="button" class="layui-btn" id="view">查看</button>
+</div>
+
+<table id="demo" lay-filter="test"></table>
+
+
+<script src="~/js/jquery-3.4.1.min.js"></script>
+<style>
+    input {
+        border: 1px solid #ccc;
+        padding: 5px 0px;
+        padding-top: 2px;
+        border-radius: 3px;
+        padding-left: 5px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+    }
+
+        input:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+        }
+</style>
+
+
+@*//$.ajax({
+         //   url:"/Api/QueryWage", //规定发送请求的 URL。默认是当前页面。
+         //   data:{
+         //        'teacherid':teacherid0,
+         //        'wagetime':wagetime0
+         //   }, //规定要发送到服务器的数据
+         //   success: function(data){  //当请求成功时运行的函数；变量：接受服务器响应结果的值
+         //       var pwage = $("#pwage");
+
+         //       alert(data.msg);
+         //       alert(data.wageList);
+         //   },
+         //   error: function () {
+         //       alert("出错了")
+         //   },
+         //   dataType:"json"//预期的服务器响应的数据类型。
+         //})
+
+
+    //    })
+    //})*@
+
+
+
+<link rel="stylesheet" href="~/layui/layui/css/layui.css" all">
+
+
+
+
+@section Scripts{
+    <script src="~/layui/layui/layui.js"></script>
+    <script>
+        $(function () {
+            $("#view").on("click", function () {
+                var teacherid0 = $("#teacherid").val();
+                var options = $("#wagetime option:selected"); //获取选中的项
+                var wagetime0 = options.val();  //拿到选中项的值
+                layui.use('table', function () {
+                    var table = layui.table;
+                    $.ajax({
+                        url: '/Api/QueryWage',
+                        data: {
+                            'teacherid': teacherid0,
+                            'wagetime': wagetime0 + "-01-01"
+                        },
+                        success: function (data) {  //当请求成功时运行的函数；变量：接受服务器响应结果的值
+                            table.render({
+                                elem: '#demo'
+                                , toolbar: true
+                                , title: 'Plan Table'
+                                , cols: [[ //表头
+                                    { field: 'wagetime', title: '日期', sort: true, fixed: 'left' }
+                                    , { field: 'basicwage', title: '基本工资' }
+                                    , { field: 'overtimewage', title: '加班工资', sort: true }
+                                    , { field: 'welfare', title: '福利补贴'}
+                                    , { field: 'bonus', title: '奖金'}
+                                    , { field: 'totalwage', title: '总计', sort: true }
+                                    //, { field: 'score', title: '编辑', width: 80, sort: true }
+
+                                ]]
+                                , data: data.wageList
+                                , even: true
+                            });
+                        },
+                    })
+                });
+            })
+        })
+    </script>
+}

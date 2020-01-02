@@ -10,9 +10,15 @@ namespace OALibrary
     {
         public static void Main()
         {
-            PlantableService plantableService = new PlantableService();
-            var planList = plantableService.QueryWorkPlan("T16060201001", 5);
-            Console.WriteLine(planList[0].Teacherid);
+
+
+            WageRepository wageRepository = new WageRepository();
+            var a = wageRepository.QueryAllbyYear("2020");
+            //Console.WriteLine(a[0].Wagetime);
+            foreach (var aa in a) 
+            {
+                Console.WriteLine(aa.Wagetime.ToString()+" "+aa.Totalwage);
+            }
             Console.ReadLine();
         }
     }

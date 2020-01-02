@@ -122,6 +122,23 @@ namespace SchoolOA.Controllers
         }
 
         /// <summary>
+        /// 查询某年所有人工资
+        /// </summary>
+        /// <param name="year">年份</param>
+        /// <returns>工资记录列表</returns>
+        public object ThisYearWage(string year) 
+        {
+            WageService wageService = new WageService();
+            var wageList = wageService.QueryWagebyYear(year);
+            return Json(new
+            {
+                code = 200,
+                msg = year + " Wage query successfully!",
+                wageList = wageList
+            });
+        }
+
+        /// <summary>
         /// 通过工资记录的表中ID修改工资信息
         /// </summary>
         /// <param name="id">工资记录表ID</param>

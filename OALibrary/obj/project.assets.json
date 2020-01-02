@@ -3254,7 +3254,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ShiZhe\\.nuget\\packages\\": {},
+    "C:\\Users\\ZheZhe\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -3263,14 +3263,14 @@
       "projectUniqueName": "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj",
       "projectName": "OALibrary",
       "projectPath": "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj",
-      "packagesPath": "C:\\Users\\ShiZhe\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\ZheZhe\\.nuget\\packages\\",
       "outputPath": "D:\\Github\\Shxi\\OALibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ShiZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ZheZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

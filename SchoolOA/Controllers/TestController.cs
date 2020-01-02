@@ -17,5 +17,9 @@ namespace SchoolOA.Controllers
         {
             return View();
         }
+
+        public IActionResult TestSelectTime() {
+            return View();
+        }
     }
 }

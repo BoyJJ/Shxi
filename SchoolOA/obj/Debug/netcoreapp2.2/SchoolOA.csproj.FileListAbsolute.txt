@@ -101,3 +101,4 @@ D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\SchoolOA.csproj.CopyComplete
 D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\SchoolOA.dll
 D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\SchoolOA.pdb
 D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\Razor\Views\Test\TestTable.cshtml.g.cs
+D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\Razor\Views\Test\TestSelectTime.cshtml.g.cs
