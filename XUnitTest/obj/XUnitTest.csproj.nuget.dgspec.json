@@ -10,14 +10,14 @@
         "projectUniqueName": "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj",
         "projectName": "OALibrary",
         "projectPath": "D:\\Github\\Shxi\\OALibrary\\OALibrary.csproj",
-        "packagesPath": "C:\\Users\\ZheZhe\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\ShiZhe\\.nuget\\packages\\",
         "outputPath": "D:\\Github\\Shxi\\OALibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ZheZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ShiZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,14 +82,14 @@
         "projectUniqueName": "D:\\Github\\Shxi\\SchoolOA\\SchoolOA.csproj",
         "projectName": "SchoolOA",
         "projectPath": "D:\\Github\\Shxi\\SchoolOA\\SchoolOA.csproj",
-        "packagesPath": "C:\\Users\\ZheZhe\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\ShiZhe\\.nuget\\packages\\",
         "outputPath": "D:\\Github\\Shxi\\SchoolOA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ZheZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ShiZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -173,14 +173,14 @@
         "projectUniqueName": "D:\\Github\\Shxi\\XUnitTest\\XUnitTest.csproj",
         "projectName": "XUnitTest",
         "projectPath": "D:\\Github\\Shxi\\XUnitTest\\XUnitTest.csproj",
-        "packagesPath": "C:\\Users\\ZheZhe\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\ShiZhe\\.nuget\\packages\\",
         "outputPath": "D:\\Github\\Shxi\\XUnitTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ZheZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ShiZhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

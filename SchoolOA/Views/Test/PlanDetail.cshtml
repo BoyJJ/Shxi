@@ -1,0 +1,219 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>批复工作计划</title>
+    <link rel="stylesheet" href="~/layui/layui/css/layui.css" media="all">
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>批复工作计划</legend>
+    </fieldset>
+    <form id="plandetail" class="layui-form" action="" lay-filter="ShowPlanDetail" style="margin:20px">
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">教师ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="teacherid" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">文件名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="filename" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">提交时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="committime" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="text" name="state" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">意见</label>
+            <div class="layui-input-block">
+                <input type="text" name="issue" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-btn-container">
+            <button type="button" id="bt1" class="layui-btn layui-btn-normal" lay-submit lay-filter="buttonpass">通过</button>
+            <button type="button" id="bt2" class="layui-btn layui-btn-warm" lay-submit lay-filter="buttoncontinue">继续修改</button>
+            <button type="button" id="bt3" class="layui-btn layui-btn-danger" lay-submit lay-filter="buttonreject">驳回</button>
+        </div>
+    </form>
+
+    <script src="~/layui/layui/layui.js"></script>
+    <script src="~/js/jquery-3.4.1.min.js"></script>
+    <script>
+        
+        function stostate(statestring)  //string ->int
+        {
+            switch(statestring) {
+                case '等待审核':
+                    return 0;
+                break;
+                case '已通过':
+                    return 1;
+                    break;
+                case '等待修正':
+                    return 2;
+                    break;
+                case '已修正':
+                    return 3;
+                    break;
+                case '已驳回':
+                    return 4;
+                break;
+                default:
+                break;
+            } 
+        }
+        function statetos(stateint) //int ->string
+        {
+            switch(stateint) {
+                case 0:
+                    return '等待审核';
+                break;
+                case 1:
+                    return '已通过';
+                    break;
+                case 2:
+                    return '等待修正';
+                    break;
+                case 3:
+                    return '已修正';
+                    break;
+                case 4:
+                    return '已驳回';
+                break;
+                default:
+                break;
+            } 
+        }
+        layui.use(['form'], function () {
+            var form = layui.form;
+            var PlanData;
+            var iid;
+            //各种基于事件的操作，下面会有进一步介绍
+            $.ajax({
+                url: '/Api/QueryWorkPlanbyID',
+                data: {
+                    id: '@ViewData["id"]'
+                    },
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    PlanData = data;
+                    iid = PlanData.plan.id;
+                    if (PlanData.plan.state == 1 || PlanData.plan.state == 4) //当计划状态为通过或者已驳回时，不可再批复计划，锁定三个按钮
+                    {
+                        $("#bt1").attr("disabled", true);
+                        $("#bt2").attr("disabled", true);
+                        $("#bt3").attr("disabled", true);
+                    }
+                    form.val('ShowPlanDetail', {
+                        "teacherid": PlanData.plan.teacherid
+                        , "filename": PlanData.plan.filename
+                        , "committime": PlanData.plan.committime
+                        , "state": statetos(PlanData.plan.state)
+                        , "issue": PlanData.plan.issue
+                    });
+                }
+            })
+
+            //监听通过提交
+            form.on('submit(buttonpass)', function (obj) {
+                console.log(iid);
+                var tabledata = obj.field;
+                $.ajax({
+                    url: '/Api/ReplyWorkPlan',
+                    data: {
+                        id : iid,
+                        state: 1, //parseInt(stostate(tabledata.state))
+                        issue: tabledata.issue
+                        },
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (data) {
+                        var a = data.msg + ' \n 页面即将自动关闭';
+                        layer.msg(a, function(){
+                            //当你在iframe页面关闭自身时
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭  
+                        }); 
+                    }
+                })
+                return false; 
+            });
+
+            //监听继续修改提交
+            form.on('submit(buttoncontinue)', function (obj) {
+                console.log(iid);
+                var tabledata = obj.field;
+                $.ajax({
+                    url: '/Api/ReplyWorkPlan',
+                    data: {
+                        id : iid,
+                        state: 2,
+                        issue: tabledata.issue
+                        },
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (data) {
+                        var a = data.msg + ' \n 页面即将自动关闭';
+                        layer.msg(a, function(){
+                            //当你在iframe页面关闭自身时
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭  
+                        }); 
+                    }
+                })
+                return false; 
+            });
+
+            //监听驳回提交
+            form.on('submit(buttonreject)', function (obj) {
+                console.log(iid);
+                var tabledata = obj.field;
+                $.ajax({
+                    url: '/Api/ReplyWorkPlan',
+                    data: {
+                        id : iid,
+                        state: 4,
+                        issue: tabledata.issue
+                        },
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (data) {
+                        //layer.open({
+                        //  content: data.msg
+                        //});
+                        var a = data.msg + ' \n 页面即将自动关闭';
+                        layer.msg(a, function(){
+                            //当你在iframe页面关闭自身时
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭  
+                        }); 
+                    }
+                })
+
+                return false; 
+            });
+
+
+
+
+            });
+    </script>
+</body>
+</html>

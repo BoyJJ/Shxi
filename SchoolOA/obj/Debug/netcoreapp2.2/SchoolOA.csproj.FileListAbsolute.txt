@@ -100,7 +100,7 @@ D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\SchoolOA.Views.pdb
 D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\SchoolOA.csproj.CopyComplete
 D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\SchoolOA.dll
 D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\SchoolOA.pdb
-D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\Razor\Views\Test\TestTable.cshtml.g.cs
-D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\Razor\Views\Test\TestSelectTime.cshtml.g.cs
-D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\Razor\Views\Test\WageDetial.cshtml.g.cs
 D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\Razor\Views\Test\EditWage.cshtml.g.cs
+D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\Razor\Views\Test\WageDetail.cshtml.g.cs
+D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\Razor\Views\Test\PlanDetail.cshtml.g.cs
+D:\Github\Shxi\SchoolOA\obj\Debug\netcoreapp2.2\Razor\Views\Test\PlanTable.cshtml.g.cs

@@ -69,8 +69,9 @@
     <script src="~/js/jquery-3.4.1.min.js"></script>
     <script>
 
-        layui.use(['form', 'laydate'], function () {
+        layui.use(['form','layer'], function () {
             var form = layui.form;
+            var layer = layui.layer;
             var WageData;
             var iid = new Number();; //记录ID
             //各种基于事件的操作，下面会有进一步介绍
@@ -100,8 +101,6 @@
             //监听提交
             form.on('submit(buttonsubmit)', function (obj) {
                 var tabledata = obj.field;
-                console.log(iid);
-                layer.msg(JSON.stringify(obj.field));
                 $.ajax({
                     url: '/Api/UpdateWage',
                     data: {
@@ -115,18 +114,21 @@
                     dataType: "JSON",
                     success: function (data) {
                         WageData = data;
-                        //form.val('ShowWageDetail', {
-                        //    "teacherid": WageData.wageList[0].teacherid
-                        //    , "wagetime": WageData.wageList[0].wagetime.substring(0,7)
-                        //    , "basicwage": WageData.wageList[0].basicwage
-                        //    , "overtimewage": WageData.wageList[0].overtimewage
-                        //    , "welfare": WageData.wageList[0].welfare
-                        //    , "bonus": WageData.wageList[0].bonus
-                        //    , "totalwage": WageData.wageList[0].totalwage
-                        //});
-                        console.log(WageData.wageList[0].welfare);
+                        layer.open({
+                          content: WageData.msg
+                        });
+                        form.val('ShowWageDetail', {
+                            "teacherid": WageData.wageList[0].teacherid
+                            , "wagetime": WageData.wageList[0].wagetime.substring(0,7)
+                            , "basicwage": WageData.wageList[0].basicwage
+                            , "overtimewage": WageData.wageList[0].overtimewage
+                            , "welfare": WageData.wageList[0].welfare
+                            , "bonus": WageData.wageList[0].bonus
+                            , "totalwage": WageData.wageList[0].totalwage
+                        });
                     }
                 })
+                return false; 
             });
         });
     </script>

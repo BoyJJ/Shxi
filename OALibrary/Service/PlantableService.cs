@@ -76,6 +76,17 @@ namespace OALibrary.Service
         }
 
         /// <summary>
+        /// 通过计划表中ID查询指定计划
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Plantable QuerybyID(int id) 
+        {
+            var plan = plantableRepository.Query(id);
+            return plan;
+        }
+
+        /// <summary>
         /// 批复工作计划
         /// </summary>
         /// <param name="id">工作计划ID</param>

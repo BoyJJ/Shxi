@@ -1,0 +1,70 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>TestLayuiTable</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/layui/layui/css/layui.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+
+    <script src="~/layui/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render({
+                elem: '#test'
+                , url: '/api/QueryWorkPlan?state=5'
+                , toolbar: true
+                , title: 'Plan Table'
+                , cols: [[
+                    { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true }
+                    , { field: 'teacherid', title: '教师ID', sort: true }
+                    //, { field: 'filepath', title: '文件路径' }
+                    , { field: 'filename', title: '文件名称' }
+                    //, { field: 'filepath', title: '文件下载', templet: '<div><a href="{{d.filepath}}" class="layui-table-link">下载</a></div>' }
+                    , {field: 'committime', title: '提交时间',width: 200,sort: true} //, templet: '<div>{{d.committime.slice(0,7)}}</div>'
+                    , { field: 'state', title: '计划状态' }
+                    , { field: 'issue', title: '原因' }
+                ]]
+                , page: false
+                , response: {
+                    statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+                }
+                , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.planList //解析数据列表
+                    };
+                }
+            });
+            //监听行单击事件
+            table.on('row(test)', function(obj){
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.open({
+                        type: 2,
+                        title: false,
+                        closeBtn: 1, //显示关闭按钮
+                        shade: [0],
+                        area: ['500px', '500px'],
+                        offset: 'auto',
+                        anim: 2,
+                        content: ['/Test/PlanDetail?id='+obj.data.id, 'no'], //iframe的url，no代表不显示滚动条
+                    });
+                });
+            });
+ 
+        });
+    </script>
+
+</body>
+</html>

@@ -32,11 +32,28 @@ namespace SchoolOA.Controllers
         }
 
         /// <summary>
+        /// 通过计划表中ID查询指定计划
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public object QueryWorkPlanbyID(int id)
+        {
+            PlantableService plantableService = new PlantableService();
+            var plan = plantableService.QuerybyID(id);
+            return Json(new
+            {
+                code = 200,
+                msg = "WorkPlan query successfully!",
+                plan = plan
+            });
+        }
+
+        /// <summary>
         /// 批复工资计划
         /// </summary>
         /// <param name="id">工作计划表中记录的ID</param>
-        /// <param name="state">工作计划的状态　当state＝５时，不按state筛选工作计划</param>
-        /// <param name="issue">处理意见，有批复人员填写</param>
+        /// <param name="state">工作计划的状态</param>
+        /// <param name="issue">处理意见，由批复人员填写</param>
         /// <returns>批复成功后，返回所有计划列表</returns>
         public object ReplyWorkPlan(int id,uint state,string issue) 
         {
@@ -93,8 +110,8 @@ namespace SchoolOA.Controllers
         /// 每次请求teacherid必填，year 和time二选一
         /// </summary>
         /// <param name="teacherid">教师ID</param>
-        /// <param name="year">工资日期1：要查询的年份eg:2019</param>
-        /// <param name="time">工资日期2：要查询的年月eg:2019-01-01、2019-12-01 若yearmonth==year,说明按年查</param>
+        /// <param name="year">必填：工资日期1：要查询的年份eg:2019 </param>
+        /// <param name="time">必填：工资日期2：要查询的年月eg:2019-01-01  若查询某一年的工资，令yearmonth=year,说明按年查</param>
         /// <returns>查询到的工资记录</returns>
         public object QueryTeacherWage(string teacherid,string year,string time) 
         {
