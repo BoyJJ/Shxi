@@ -1,2 +1,34 @@
-﻿<a  asp-controller="Test" asp-action="TestTable">Test Table</a>
+﻿<a asp-controller="Test" asp-action="TestTable">Test Table</a>
 <a asp-controller="Test" asp-action="TestSelectTime">TestSelectTime</a>
+
+
+<script src="~/layui/layui/layui.js"></script>
+<script>
+    //layui.use('layer', function(){
+    //    var layer = layui.layer;
+    //    layer.open({
+    //        type: 2,
+    //        title: false,
+    //        closeBtn: 1, //显示关闭按钮
+    //        shade: [0],
+    //        area: ['500px', '450px'],
+    //        offset: 'auto',
+    //        anim: 2,
+    //        content: ['/Test/WageDetial?teacherid=T16060201001&time=2019-12-01', 'no'], //iframe的url，no代表不显示滚动条
+    //    });
+    //}); 
+
+    layui.use('layer', function(){
+    var layer = layui.layer;
+    layer.open({
+        type: 2,
+        title: false,
+        closeBtn: 1, //显示关闭按钮
+        shade: [0],
+        area: ['500px', '500px'],
+        offset: 'auto',
+        anim: 2,
+        content: ['/Test/EditWage?teacherid=T13030201034&time=2019-01-01', 'no'], //iframe的url，no代表不显示滚动条
+        });
+    }); 
+</script>

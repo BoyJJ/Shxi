@@ -48,11 +48,15 @@ namespace OALibrary.Service
         /// </summary>
         /// <param name="teacherid">教师ID</param>
         /// <param name="year">年份（eg:2019--string类型）</param>
-        /// <param name="yearmonth">年月（eg:2019-01-01表示2019年1月工资）</param>
+        /// <param name="yearmonth">年月（eg:2019-01-01表示2019年1月工资）若yearmonth==year,说明按年查</param>
         /// <returns></returns>
         public List<Wage> QueryTeacherWage(string teacherid, string year, string yearmonth)
         {
-            if (string.IsNullOrEmpty(year)) //year为空，按年月查询某一月工资
+            if (string.IsNullOrEmpty(year)) 
+            {
+                return new List<Wage> { wageRepository.QuerybyTidMonth(teacherid, yearmonth) };//类型转化 ：Wage --> List<Wage>
+            }
+            if (!year.Equals(yearmonth)) //year!=yearmonth，说明有传进来了月数参数，按某年月查询某一月工资
             {
                 return new List<Wage> { wageRepository.QuerybyTidMonth(teacherid, yearmonth) };//类型转化 ：Wage --> List<Wage>
             }

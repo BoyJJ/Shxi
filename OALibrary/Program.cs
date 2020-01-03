@@ -16,7 +16,8 @@ namespace OALibrary
             WageService wageService = new WageService();
             var a = wageService.QueryDepartmentWage("zjc2016001", "2019-12-01");
             //Console.WriteLine(a[0].Wagetime);
-            foreach (var aa in a) 
+            var b = wageRepository.FixTime(a);
+            foreach (var aa in b) 
             {
                 Console.WriteLine(aa.Wagetime.ToString()+" "+aa.Totalwage);
             }

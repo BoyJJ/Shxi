@@ -21,5 +21,19 @@ namespace SchoolOA.Controllers
         public IActionResult TestSelectTime() {
             return View();
         }
+
+        public IActionResult WageDetial(string teacherid, string time)
+        {
+            ViewData["teacherid"] = teacherid;
+            ViewData["time"] = time;
+            return View();
+        }
+
+        public IActionResult EditWage(string teacherid, string time)
+        {
+            ViewData["teacherid"] = teacherid;
+            ViewData["time"] = time;
+            return View();
+        }
     }
 }

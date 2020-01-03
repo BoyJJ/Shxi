@@ -1,0 +1,134 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改工资</title>
+    <link rel="stylesheet" href="~/layui/layui/css/layui.css" media="all">
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>我的工资</legend>
+    </fieldset>
+    <form id="wagedetail" class="layui-form" action="" lay-filter="ShowWageDetail" style="margin:20px">
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">教师ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="teacherid" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">工资日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="wagetime" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">基本工资</label>
+            <div class="layui-input-block">
+                <input type="text" name="basicwage" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">加班工资</label>
+            <div class="layui-input-block">
+                <input type="text" name="overtimewage" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">福利工资</label>
+            <div class="layui-input-block">
+                <input type="text" name="welfare" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">全勤工资</label>
+            <div class="layui-input-block">
+                <input type="text" name="bonus" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">总工资</label>
+            <div class="layui-input-block">
+                <input type="text" name="totalwage" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="buttonsubmit">立即提交</button>
+            </div>
+
+        </div>
+    </form>
+
+    <script src="~/layui/layui/layui.js"></script>
+    <script src="~/js/jquery-3.4.1.min.js"></script>
+    <script>
+
+        layui.use(['form', 'laydate'], function () {
+            var form = layui.form;
+            var WageData;
+            var iid = new Number();; //记录ID
+            //各种基于事件的操作，下面会有进一步介绍
+            $.ajax({
+                url: '/Api/QueryTeacherWage',
+                data: {
+                    teacherid: '@ViewData["teacherid"]'
+                    ,time: '@ViewData["time"]'
+                    },
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    WageData = data;
+                    iid = WageData.wageList[0].id;
+                    console.log(typeof iid);
+                    form.val('ShowWageDetail', {
+                        "teacherid": WageData.wageList[0].teacherid
+                        , "wagetime": WageData.wageList[0].wagetime.substring(0,7)
+                        , "basicwage": WageData.wageList[0].basicwage
+                        , "overtimewage": WageData.wageList[0].overtimewage
+                        , "welfare": WageData.wageList[0].welfare
+                        , "bonus": WageData.wageList[0].bonus
+                        , "totalwage": WageData.wageList[0].totalwage
+                    });
+                }
+            })
+            //监听提交
+            form.on('submit(buttonsubmit)', function (obj) {
+                var tabledata = obj.field;
+                console.log(iid);
+                layer.msg(JSON.stringify(obj.field));
+                $.ajax({
+                    url: '/Api/UpdateWage',
+                    data: {
+                        id : iid,
+                        basicwage :tabledata.basicwage,
+                        overtimewage :tabledata.overtimewage,
+                        welfare :tabledata.welfare,
+                        bonus :tabledata.bonus
+                        },
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (data) {
+                        WageData = data;
+                        //form.val('ShowWageDetail', {
+                        //    "teacherid": WageData.wageList[0].teacherid
+                        //    , "wagetime": WageData.wageList[0].wagetime.substring(0,7)
+                        //    , "basicwage": WageData.wageList[0].basicwage
+                        //    , "overtimewage": WageData.wageList[0].overtimewage
+                        //    , "welfare": WageData.wageList[0].welfare
+                        //    , "bonus": WageData.wageList[0].bonus
+                        //    , "totalwage": WageData.wageList[0].totalwage
+                        //});
+                        console.log(WageData.wageList[0].welfare);
+                    }
+                })
+            });
+        });
+    </script>
+</body>
+</html>

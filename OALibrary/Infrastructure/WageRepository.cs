@@ -86,6 +86,7 @@ namespace OALibrary.Infrastructure
             {
                 var wage = context.Wage.FirstOrDefault(x => x.Id == id);
                 context.SaveChanges();
+                //wage.Wagetime = wage.Wagetime.ToString("yyyy-MM");
                 return wage;
             }
         }
@@ -99,6 +100,7 @@ namespace OALibrary.Infrastructure
         public List<Wage> QueryAllbyTidYear(string teacherid,string year)
         {
             List<Wage> wageList = new List<Wage>();
+            List<Wagestringtime> wageListstring = new List<Wagestringtime>();
             string Jan = "-01-01";
             string Dec = "-12-01";
             string Begin = year + Jan;
@@ -218,5 +220,27 @@ namespace OALibrary.Infrastructure
                 context.SaveChanges();
             }
         }
+
+        public List<Wagestringtime> FixTime(List<Wage> wageList) 
+        {
+            List<Wagestringtime> wagestringtimeList = new List<Wagestringtime>();
+            foreach (var u in wageList) 
+            {
+                wagestringtimeList.Add(new Wagestringtime { Id = u.Id, Teacherid = u.Teacherid, Wagetime = u.Wagetime.ToString("yyyy-MM"), Basicwage = u.Basicwage, Overtimewage = u.Overtimewage, Welfare = u.Welfare, Bonus = u.Bonus, Totalwage = u.Totalwage });
+            }
+            return wagestringtimeList;
+        }
+    }
+
+    public class Wagestringtime
+    {
+        public int Id { get; set; }
+        public string Teacherid { get; set; }
+        public string Wagetime { get; set; }
+        public float Basicwage { get; set; }
+        public float? Overtimewage { get; set; }
+        public float? Welfare { get; set; }
+        public float? Bonus { get; set; }
+        public float? Totalwage { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using OALibrary.Entities;
 using OALibrary.Service;
 using SchoolOA.Models;
 
@@ -93,7 +94,7 @@ namespace SchoolOA.Controllers
         /// </summary>
         /// <param name="teacherid">教师ID</param>
         /// <param name="year">工资日期1：要查询的年份eg:2019</param>
-        /// <param name="time">工资日期2：要查询的年月eg:2019-01-01、2019-12-01</param>
+        /// <param name="time">工资日期2：要查询的年月eg:2019-01-01、2019-12-01 若yearmonth==year,说明按年查</param>
         /// <returns>查询到的工资记录</returns>
         public object QueryTeacherWage(string teacherid,string year,string time) 
         {
@@ -172,10 +173,13 @@ namespace SchoolOA.Controllers
         {
             WageService wageService = new WageService();
             wageService.UpdateWage(id, basicwage, overtimewage, welfare, bonus);
+            List<Wage> wage = new List<Wage>();
+            wage.Add(wageService.QuerybyID(id));
             return Json(new
             {
                 code = 200,
                 msg = "Wage update/set successfully!",
+                wageList = wage
             });
         }
 
