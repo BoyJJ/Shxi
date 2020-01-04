@@ -37,5 +37,16 @@ namespace SchoolOA.Controllers
             ViewData["id"] = id;
             return View();
         }
+
+        public IActionResult MaterialTable() 
+        {
+            return View();
+        }
+
+        public IActionResult MaterialDetail(int id) 
+        {
+            ViewData["id"] = id;
+            return View();
+        }
     }
 }

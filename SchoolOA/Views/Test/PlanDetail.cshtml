@@ -117,9 +117,18 @@
                     iid = PlanData.plan.id;
                     if (PlanData.plan.state == 1 || PlanData.plan.state == 4) //当计划状态为通过或者已驳回时，不可再批复计划，锁定三个按钮
                     {
-                        $("#bt1").attr("disabled", true);
-                        $("#bt2").attr("disabled", true);
-                        $("#bt3").attr("disabled", true);
+                        //$("#bt1").attr("disabled", true);
+                        //$("#bt2").attr("disabled", true);
+                        //$("#bt3").attr("disabled", true);
+                        var DomClass = document.getElementById("bt1").className;
+                        DomClass = DomClass.replace('layui-btn-normal',"layui-btn-disabled");
+                        document.getElementById("bt1").className = DomClass;
+                        var DomClass = document.getElementById("bt2").className;
+                        DomClass = DomClass.replace('layui-btn-warm',"layui-btn-disabled");
+                        document.getElementById("bt2").className = DomClass;
+                        var DomClass = document.getElementById("bt3").className;
+                        DomClass = DomClass.replace('layui-btn-danger',"layui-btn-disabled");
+                        document.getElementById("bt3").className = DomClass;
                     }
                     form.val('ShowPlanDetail', {
                         "teacherid": PlanData.plan.teacherid

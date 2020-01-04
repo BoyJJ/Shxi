@@ -39,7 +39,7 @@ namespace OALibrary.Service
         /// <param name="departmentid">部门ID</param>
         /// <param name="state">物资申请状态</param>
         /// <returns>物资申请记录列表</returns>
-        public List<Materialapply> Query(string departmentid,int state) 
+        public List<Materialapply> QuerybyDS(string departmentid,int state) 
         {
             if (state == 3) //物资申请记录的状态不作为对记录筛选条件
             {
@@ -57,6 +57,16 @@ namespace OALibrary.Service
             {
                 return materialapplyRepository.QueryMaterialapplybyDS(departmentid,state);
             }
+        }
+
+        /// <summary>
+        /// 根据记录ID查询指定记录
+        /// </summary>
+        /// <param name="id">记录ID</param>
+        /// <returns></returns>
+        public Materialapply QuerybyID(int id) 
+        {
+            return materialapplyRepository.Query(id);
         }
 
         public void Update(int id,int state)   //EF 生成的这个State是int型

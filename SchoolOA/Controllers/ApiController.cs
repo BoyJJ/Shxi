@@ -77,7 +77,7 @@ namespace SchoolOA.Controllers
         public object QueryMaterialApplication(int state,string departmentid) 
         {
             MaterialapplyService materialapplyService = new MaterialapplyService();
-            var materialapplyList = materialapplyService.Query(departmentid, state);
+            var materialapplyList = materialapplyService.QuerybyDS(departmentid, state);
             return Json(new
             {
                 code = 200,
@@ -85,6 +85,24 @@ namespace SchoolOA.Controllers
                 materialapplyList = materialapplyList
             });
         }
+
+        /// <summary>
+        /// 通过物资申请记录的ID查询物资申请记录
+        /// </summary>
+        /// <param name="id">物资申请记录的ID</param>
+        /// <returns></returns>
+        public object QueryMaterialbyID(int id) 
+        {
+            MaterialapplyService materialapplyService = new MaterialapplyService();
+            var material = materialapplyService.QuerybyID(id);
+            return Json(new
+            {
+                code = 200,
+                msg = "Query Material Application Successfully!",
+                material = material
+            });
+        }
+
 
         /// <summary>
         /// 通过物资申请表的ID处理指定物资申请记录的状态
@@ -96,7 +114,7 @@ namespace SchoolOA.Controllers
         {
             MaterialapplyService materialapplyService = new MaterialapplyService();
             materialapplyService.Update(id,state);
-            var materialapplyList = materialapplyService.Query("", 3);
+            var materialapplyList = materialapplyService.QuerybyDS("", 3);
             return Json(new
             {
                 code = 200,
