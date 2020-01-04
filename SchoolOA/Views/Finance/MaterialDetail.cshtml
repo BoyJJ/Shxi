@@ -1,0 +1,183 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>批复物资申请</title>
+    <link rel="stylesheet" href="~/layui/layui/css/layui.css" media="all">
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>批复物资申请</legend>
+    </fieldset>
+    <form id="mdetail" class="layui-form" action="" lay-filter="ShowMDetail" style="margin:20px">
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">部门ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="departmentid" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">教师ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="tid" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">物资名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="goodsname" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">物资数量</label>
+            <div class="layui-input-block">
+                <input type="text" name="goodsnum" readonly class="layui-input">
+            </div>  
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">物资单价</label>
+            <div class="layui-input-block">
+                <input type="text" name="goodsprice" readonly class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">采购原因</label>
+            <div class="layui-input-block">
+                <input type="text" name="remarks" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item  ">
+            <label class="layui-form-label">申请状态</label>
+            <div class="layui-input-block">
+                <input type="text" name="state" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-btn-container">
+            <button type="button" id="bt1" class="layui-btn layui-btn-normal" lay-submit lay-filter="buttonpass">同意</button>
+            <button type="button" id="bt2" class="layui-btn layui-btn-danger" lay-submit lay-filter="buttonreject">拒绝</button>
+        </div>
+    </form>
+
+    <script src="~/layui/layui/layui.js"></script>
+    <script src="~/js/jquery-3.4.1.min.js"></script>
+    <script>
+        
+        function statetostring(stateint) //int ->string
+        {
+            switch(stateint) {
+                case 0:
+                    return '未处理';
+                break;
+                case 1:
+                    return '同意';
+                    break;
+                case 2:
+                    return '拒绝';
+                    break;
+                break;
+                default:
+                break;
+            } 
+        }
+
+        layui.use(['form','layer'], function () {
+            var form = layui.form;
+            var MData;
+            var iid;
+            //各种基于事件的操作，下面会有进一步介绍
+            $.ajax({
+                url: '/Api/QueryMaterialbyID',
+                data: {
+                    id: '@ViewData["id"]'
+                    },
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    MData = data;
+                    iid = MData.material.id;
+                    if (MData.material.state == 1 || MData.material.state == 2) //当计划状态为通过或者已驳回时，不可再批复计划，锁定三个按钮
+                    {
+                        var DomClass = document.getElementById("bt1").className;
+                        DomClass = DomClass.replace('layui-btn-normal',"layui-btn-disabled");
+                        document.getElementById("bt1").className = DomClass;
+                        var DomClass = document.getElementById("bt2").className;
+                        DomClass = DomClass.replace('layui-btn-danger',"layui-btn-disabled");
+                        document.getElementById("bt2").className = DomClass;
+                    }
+                    form.val('ShowMDetail', {
+                        "departmentid": MData.material.departmentid
+                        , "tid": MData.material.tid
+                        , "goodsname": MData.material.goodsname
+                        , "goodsnum": MData.material.goodsnum
+                        , "goodsprice": MData.material.goodsprice
+                        , "remarks": MData.material.remarks
+                        , "state": statetostring(MData.material.state)
+                    });
+                }
+            })
+
+            ////监听通过提交
+            form.on('submit(buttonpass)', function (obj) {
+                console.log(iid);
+                var tabledata = obj.field;
+                $.ajax({
+                    url: '/Api/HandleMaterialApplication',
+                    data: {
+                        id : iid,
+                        state: 1, //parseInt(stostate(tabledata.state))
+                        },
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (data) {
+                        var a = data.msg + ' \n 页面即将自动关闭';
+                        layer.msg(a, function(){
+                            //当你在iframe页面关闭自身时
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭  
+                        }); 
+                    }
+                })
+                return false; 
+            });
+
+
+            ////监听驳回提交
+            form.on('submit(buttonreject)', function (obj) {
+                console.log(iid);
+                var tabledata = obj.field;
+                $.ajax({
+                    url: '/api/HandleMaterialApplication',
+                    data: {
+                        id : iid,
+                        state: 2,
+                        },
+                    type: "get",
+                    datatype: "json",
+                    success: function (data) {
+                        //layer.open({
+                        //  content: data.msg
+                        //});
+                        var a = data.msg + ' \n 页面即将自动关闭';
+                        layer.msg(a, function(){
+                            //当你在iframe页面关闭自身时
+                            var index = parent.layer.getframeindex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭  
+                        }); 
+                    }
+                })
+
+                return false; 
+            });
+
+
+
+
+            });
+    </script>
+</body>
+</html>

@@ -13,11 +13,6 @@ namespace SchoolOA.Controllers
             return View();
         }
 
-        public IActionResult PlanTable() 
-        {
-            return View();
-        }
-
         public IActionResult WageDetail(string teacherid, string time)
         {
             ViewData["teacherid"] = teacherid;
@@ -25,28 +20,6 @@ namespace SchoolOA.Controllers
             return View();
         }
 
-        public IActionResult EditWage(string teacherid, string time)
-        {
-            ViewData["teacherid"] = teacherid;
-            ViewData["time"] = time;
-            return View();
-        }
 
-        public IActionResult PlanDetail(int id)
-        {
-            ViewData["id"] = id;
-            return View();
-        }
-
-        public IActionResult MaterialTable() 
-        {
-            return View();
-        }
-
-        public IActionResult MaterialDetail(int id) 
-        {
-            ViewData["id"] = id;
-            return View();
-        }
     }
 }

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 校长管理模块</title>
+    <link rel="stylesheet" href="~/layui/layui/css/layui.css" media="all">
+
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">校长管理模块</div>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item"><a href="">退了</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                     <dd><a asp-controller="SchoolMaster" asp-action="PlanTable">审批工作计划</a></dd>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+
+
+            <!-- 内容主体区域 -->
+            @RenderBody()
+
+
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © layui.com - 底部固定区域
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>
+
