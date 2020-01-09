@@ -1,6 +1,4 @@
-﻿@{
-    Layout = "_FinanceLayout";
-}
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +10,7 @@
     <link rel="stylesheet" href="~/layui/layui/css/layui.css" media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
-<body>
+<body style="margin:10px 15%">
 
     <table class="layui-hide" id="mtable" lay-filter="mtable"></table>
 
@@ -33,7 +31,7 @@
                 break;
                 default:
                 break;
-            }
+            } 
         }
 
 
@@ -45,12 +43,12 @@
                 , toolbar: true
                 , title: 'Material Table'
                 , cols: [[
-                    { field: 'id', title: 'ID', fixed: 'left', sort: true }
+                    { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true }
                     , { field: 'departmentid', title: '部门ID', sort: true }
                     , { field: 'tid', title: '教师ID', sort: true }
                     , { field: 'goodsname', title: '物资名称' }
                     , { field: 'goodsnum', title: '物资数量' }
-                    , {field: 'goodsprice', title: '物资价格',sort: true} //, templet: '<div>{{d.committime.slice(0,7)}}</div>'
+                    , {field: 'goodsprice', title: '物资价格',width: 200,sort: true} //, templet: '<div>{{d.committime.slice(0,7)}}</div>'
                     , { field: 'state', title: '总价', templet: '<div>{{d.goodsnum*d.goodsprice}}</div>' }
                     , { field: 'remarks', title: '采购原因' }
                     , {field: 'state', title: '申请状态'
@@ -88,7 +86,7 @@
                     });
                 });
             });
-
+ 
         });
     </script>
 

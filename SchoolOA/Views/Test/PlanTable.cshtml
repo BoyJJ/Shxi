@@ -1,6 +1,4 @@
-﻿@{
-    Layout = "_MasterLayout";
-}
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +10,7 @@
     <link rel="stylesheet" href="~/layui/layui/css/layui.css" media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
-<body>
+<body style="margin:10px 15%">
 
     <table class="layui-hide" id="test" lay-filter="test"></table>
 
@@ -60,11 +58,11 @@
                         area: ['500px', '500px'],
                         offset: 'auto',
                         anim: 2,
-                        content: ['/SchoolMaster/PlanDetail?id='+obj.data.id, 'no'], //iframe的url，no代表不显示滚动条
+                        content: ['/Test/PlanDetail?id='+obj.data.id, 'no'], //iframe的url，no代表不显示滚动条
                     });
                 });
             });
-
+ 
         });
     </script>
 

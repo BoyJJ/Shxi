@@ -239,21 +239,5 @@ namespace SchoolOA.Controllers
             });
         }
 
-        /// <summary>
-        ///删除工资记录
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public object DeleteTeacherWage(int id)
-        {
-            WageService wageService = new WageService();
-            wageService.DeleteWage(id);
-            return Json(new
-            {
-                code = 200,
-                msg = "delect Wage successfully!",
-            });
-        }
-
     }
 }
