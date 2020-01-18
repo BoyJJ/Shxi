@@ -1,0 +1,181 @@
+﻿@{
+    Layout = "_FinanceLayout";
+}
+<style>
+    #month0, input {
+        border: 1px solid #ccc;
+        padding: 5px 0px;
+        padding-top: 2px;
+        border-radius: 3px;
+        padding-left: 5px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+    }
+
+        #month0, input:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+        }
+</style>
+
+<h2 style="font-size:16px;display: inline-block;padding: 5px">员工工号</h2>
+<input style="border: 2px solid #ccc; width: 110px" type="text" name="teacherid" placeholder="请输入员工工号" id="teacherid" @*required="required"*@ />
+
+<h2 style="font-size:16px;display: inline-block;padding: 5px">选择查看日期</h2>
+
+@*年选择 *@
+<div id="year0" style="display: inline-block">
+    <ul id="layui-laydate4" class="laydate-year-list">
+        <li>
+            <input style="border: 2px solid #ccc; width: 70px" type="text" id="picker4" />
+        </li>
+    </ul>
+</div>
+
+
+        @*月选择*@
+        <select style=" border: 2px solid #ccc; width: 80px; border-radius: 3px; margin-top: 3px" id="month0">
+            <option value=""></option>
+            <option value="-01">一月</option>
+            <option value="-02">二月</option>
+            <option value="-03">三月</option>
+            <option value="-04">四月</option>
+            <option value="-05">五月</option>
+            <option value="-06">六月</option>
+            <option value="-07">七月</option>
+            <option value="-08">八月</option>
+            <option value="-09">九月</option>
+            <option value="-10">十月</option>
+            <option value="-11">十一月</option>
+            <option value="-12">十二月</option>
+        </select>
+
+        <div class="layui-btn-container" style="display:inline-block">
+            <button type="button" class="layui-btn layui-btn-sm" id="view">查看</button>
+        </div>
+
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+     @section Scripts{
+        <script src="~/js/jquery-3.4.1.min.js"></script>
+        <script src="~/layui/layui/layui.js"></script>
+        <script type="text/html" id="barDemo">
+             <a class="layui-btn layui-btn-xs" lay-event="edit" id="edit2">编辑</a>
+             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+        <script>
+        $(function () {
+            var yearr;
+            layui.use(['layer', 'laydate'], function () {
+                var laydate = layui.laydate;
+                //时间选择器(年)
+                laydate.render({
+                    elem: '#picker4',
+                    theme: 'molv',
+                    type: 'year',
+                    btns: ['now'],
+                    // max: getNowFormatDate(), //getNowFormatDate is not defined
+                    ready: function (date) {
+                        $("#layui-laydate4").off('click').on('click', '.laydate-year-list li', function () {
+                            $("#layui-laydate4").remove();
+                        });
+                    },
+                    change: function (value, dates, edate) {
+                        var year = $('#picker4').val(value);
+                        yearr = value;
+                    }
+                });
+            })
+
+
+            $("#view").on("click", function () {
+                var teacheridd = $("#teacherid").val();//获取老师id
+                var monthh = $("#month0 option:selected").val(); //获取月
+                var yearmonth = yearr + monthh;
+                if (teacherid == null) {
+                    layer.msg('请填写所查寻教师工号', { icon: 7, time: 5000, shade: [0.6, '#000', true] });
+                if (yearr == null)
+                    layer.msg('请选择所查年份', { icon: 7, time: 5000, shade: [0.6, '#000', true] });
+                }
+                layui.use('table', function () {
+                    var table = layui.table;
+                        $.ajax({
+                            url: '/Api/QueryTeacherWage',
+                            data: {
+                                'teacherid': teacheridd,
+                                'year':yearr,
+                                'time':yearr + monthh
+                            },
+                            success: function (data) {  //当请求成功时运行的函数；变量：接受服务器响应结果的值
+
+                                table.render({
+                                    elem: '#test'
+                                    , title: 'wage Table'
+                                    , page: true //开启分页
+                                    ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                                    ,defaultToolbar: ['filter']
+                                    , cols: [[ //表头
+                                        { field: 'wagetime', templet: '<div>{{d.wagetime.slice(0,7)}}</div>',title: '日期', sort: true, fixed: 'left' }
+                                        , { field: 'basicwage', title: '基本工资' }
+                                        , { field: 'overtimewage', title: '加班工资', sort: true }
+                                        , { field: 'welfare', title: '福利补贴', }
+                                        , { field: 'bonus', title: '奖金' }
+                                        , { field: 'totalwage', title: '总计', sort: true }
+                                        ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+
+                                    ]]
+                                    , data: data.wageList
+                                    , even: true
+                                });
+                            },
+                        })
+                       // 工具栏监听
+                        table.on('tool(test)', function(obj){
+                             var data = obj.data;
+                               if(obj.event === 'del'){
+                                   layer.confirm('真的删除行么', function (index) {
+                                       $.ajax({
+                                           url: "/Api/DeleteTeacherWage",
+                                           type: "POST",
+                                           data: { id: data.id },
+                                            success: function (data) {
+                                                if (data.code == 200) {
+                                                    //删除这一行
+                                                    obj.del();
+                                                    //关闭弹框
+                                                    layer.close(index);
+                                                    layer.msg("删除成功", {icon: 6});
+                                                } else {
+                                                    layer.msg("删除失败", {icon: 5});
+                                                }
+                                            }
+                                        });
+                                       //obj.del();
+                                      //layer.close(index);
+                                    });
+                                 } else if (obj.event === 'edit') {
+                                    layer.open({
+                                    type:2,
+                                    area: ['500px', '700px'],
+                                        resize: false,
+                                        content: '/Finance/EditWage?teacherid=' + teacheridd + '&time=' + data.wagetime,
+
+                                  })
+                               }
+                        });
+
+
+                });
+
+            })
+        });
+
+
+            </script>
+        }
+
+
